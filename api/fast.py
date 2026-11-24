@@ -37,6 +37,6 @@ def predict_endpoint(island: str, bill_length_mm : float, bill_depth_mm : float,
     model_path= "models/pipeline_logreg.joblib"
     model = joblib.load(model_path)
     prediction = model.predict(X_pred)
-    return {"species": prediction[0]}
+    return {"prediction": prediction[0]}
 
     # return (model.predict(X_pred))
