@@ -24,16 +24,17 @@ def dummy(number: int):
 
 # Predict endpoint
 @app.get("/predict")
-def predict(island: str, bill_length_mm : float, bill_depth_mm : float, flipper_length_mm : float, body_mass_g : float, sex: str) :
+def predict_endpoint(island: str, bill_length_mm : float, bill_depth_mm : float, flipper_length_mm : float, body_mass_g : float, sex: str) :
     """ Predict endpoint that returns a prediction of the pinguin"""
-    X_pred = pd.DataFrame([{"island" : island,
-                           "bill_length_mm" : bill_length_mm,
-                           "bill_depth_mm" : bill_depth_mm,
-                           "flipper_length_mm" : flipper_length_mm,
-                           "body_mass_g" : body_mass_g,
-                           "sex" : sex
-                           }])
-    model_path= "../models/pipeline_logreg.joblib"
+    X_pred = pd.DataFrame([dict(
+            island=island,
+            bill_length_mm=bill_length_mm,
+            bill_depth_mm=bill_depth_mm,
+            flipper_length_mm=flipper_length_mm,
+            body_mass_g=body_mass_g,
+            sex=sex
+    )])
+    model_path= "models/pipeline_logreg.joblib"
     model = joblib.load(model_path)
     prediction = model.predict(X_pred)
     return {"species": prediction[0]}
